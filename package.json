@@ -9,7 +9,10 @@
     "build": "tsc && vite build",
     "preview": "vite preview",
     "tauri": "tauri",
-    "check": "tsc --noEmit && cd src-tauri && cargo check"
+    "check": "tsc --noEmit && cd src-tauri && cargo check",
+    "dev:web": "vite --mode web",
+    "build:web": "tsc && vite build --mode web",
+    "serve:web": "cd src-tauri && cargo run --features web"
   },
   "dependencies": {
     "@hookform/resolvers": "^3.9.1",

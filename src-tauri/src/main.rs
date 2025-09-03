@@ -6,6 +6,9 @@ mod claude_binary;
 mod commands;
 mod process;
 
+#[cfg(feature = "web")]
+mod web_server;
+
 use checkpoint::state::CheckpointState;
 use commands::agents::{
     cleanup_finished_processes, create_agent, delete_agent, execute_agent, export_agent,
@@ -167,6 +170,15 @@ fn main() {
                     apply_vibrancy(&window, NSVisualEffectMaterial::WindowBackground, None, None)
                         .expect("Failed to apply any window vibrancy");
                 }
+            }
+
+            // Start web server if web feature is enabled
+            #[cfg(feature = "web")]
+            {
+                let app_handle = app.handle().clone();
+                tokio::spawn(async move {
+                    web_server::start(app_handle).await;
+                });
             }
 
             Ok(())

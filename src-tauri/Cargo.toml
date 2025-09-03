@@ -53,6 +53,8 @@ zstd = "0.13"
 uuid = { version = "1.6", features = ["v4", "serde"] }
 walkdir = "2"
 serde_yaml = "0.9"
+axum = { version = "0.7", optional = true }
+tower-http = { version = "0.5", features = ["cors"], optional = true }
 
 
 [target.'cfg(target_os = "macos")'.dependencies]
@@ -64,6 +66,8 @@ objc = "0.2"
 [features]
 # This feature is used for production builds or when a dev server is not specified, DO NOT REMOVE!!
 custom-protocol = ["tauri/custom-protocol"]
+# Web server feature for web version
+web = ["axum", "tower-http"]
 
 [profile.release]
 strip = true

@@ -1943,3 +1943,14 @@ export const api = {
   },
 
 };
+
+// 环境检测和 API 适配
+const isTauri = typeof window !== 'undefined' && window.__TAURI__;
+
+// 动态导入 Web API 适配器
+if (!isTauri) {
+  const { webApi } = await import('./api/web-adapter');
+  Object.assign(api, webApi);
+}
+
+export default api;

@@ -16,6 +16,21 @@ export default defineConfig(async () => ({
     },
   },
 
+  // Web 模式配置
+  ...(process.env.NODE_ENV === 'web' && {
+    server: {
+      port: 1420,
+      strictPort: true,
+      proxy: {
+        '/api': 'http://localhost:3000',
+        '/ws': {
+          target: 'ws://localhost:3000',
+          ws: true,
+        },
+      },
+    },
+  }),
+
   // Vite options tailored for Tauri development and only applied in `tauri dev` or `tauri build`
   //
   // 1. prevent vite from obscuring rust errors
