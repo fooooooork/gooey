@@ -1,6 +1,4 @@
 use axum::{
-    extract::State,
-    http::StatusCode,
     response::Json,
     routing::{get, post, put, delete},
     Router,
@@ -9,7 +7,6 @@ use tower_http::cors::CorsLayer;
 use tauri::AppHandle;
 use serde_json::json;
 
-use crate::commands::*;
 use crate::web_routes::*;
 
 pub async fn start(app_handle: AppHandle) {
@@ -50,7 +47,7 @@ pub async fn start(app_handle: AppHandle) {
         .route("/api/checkpoints/:id/restore", post(restore_checkpoint_web))
         
         // WebSocket 连接
-        .route("/ws", get(web_websocket::websocket_handler))
+        .route("/ws", get(crate::web_websocket::websocket_handler))
         
         // 健康检查
         .route("/health", get(health_check))

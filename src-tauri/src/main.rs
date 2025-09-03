@@ -8,6 +8,12 @@ mod process;
 
 #[cfg(feature = "web")]
 mod web_server;
+#[cfg(feature = "web")]
+mod web_routes;
+#[cfg(feature = "web")]
+mod web_websocket;
+#[cfg(feature = "web")]
+mod web_server_simple;
 
 use checkpoint::state::CheckpointState;
 use commands::agents::{
@@ -175,9 +181,8 @@ fn main() {
             // Start web server if web feature is enabled
             #[cfg(feature = "web")]
             {
-                let app_handle = app.handle().clone();
-                tokio::spawn(async move {
-                    web_server::start(app_handle).await;
+                tauri::async_runtime::spawn(async move {
+                    web_server_simple::start_simple().await;
                 });
             }
 
